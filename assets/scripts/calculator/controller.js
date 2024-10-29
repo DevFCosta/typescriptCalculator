@@ -1,6 +1,7 @@
+import DateHour from "./dateHour.js";
 export default class controller {
     constructor() {
-        console.log("controller");
+        new DateHour;
     }
 }
 //# sourceMappingURL=controller.js.map
