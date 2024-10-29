@@ -6,7 +6,11 @@ export default class controller {
 
   constructor(
     private currScreen = new Screen(),
-    private operation = new Operation()
+    private operation = new Operation({
+        onCalculate:(result: string) => 
+            this.currScreen.content = result
+        
+    })
 ) {
 
     new DateHour();
@@ -42,6 +46,7 @@ export default class controller {
           case "dot":
             break; 
           case "equal":
+            this.handleCalculate()
             break;
           case "clear":
             break; 
@@ -49,6 +54,10 @@ export default class controller {
         }
       });
     });
+  }
+
+  handleCalculate(): void{
+this.operation.calculate()
   }
 
   handleAddOperation(value: string) : void {

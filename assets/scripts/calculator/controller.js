@@ -4,7 +4,9 @@ import Screen from "./screen.js";
 export default class controller {
     currScreen;
     operation;
-    constructor(currScreen = new Screen(), operation = new Operation()) {
+    constructor(currScreen = new Screen(), operation = new Operation({
+        onCalculate: (result) => this.currScreen.content = result
+    })) {
         this.currScreen = currScreen;
         this.operation = operation;
         new DateHour();
@@ -39,6 +41,7 @@ export default class controller {
                     case "dot":
                         break;
                     case "equal":
+                        this.handleCalculate();
                         break;
                     case "clear":
                         break;
@@ -46,6 +49,9 @@ export default class controller {
                 }
             });
         });
+    }
+    handleCalculate() {
+        this.operation.calculate();
     }
     handleAddOperation(value) {
         this.operation.handleAddNumber(value);
