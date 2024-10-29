@@ -1,9 +1,12 @@
 import DateHour from "./dateHour.js";
+import Operation from "./operations.js";
 import Screen from "./screen.js";
 export default class controller {
     currScreen;
-    constructor(currScreen = new Screen()) {
+    operation;
+    constructor(currScreen = new Screen(), operation = new Operation()) {
         this.currScreen = currScreen;
+        this.operation = operation;
         new DateHour();
         this.buttonEvents();
     }
@@ -29,6 +32,7 @@ export default class controller {
                     case "subtraction":
                     case "quotient":
                     case "product":
+                        this.handleAddOperator(target.dataset.value);
                         break;
                     case "percentage":
                         break;
@@ -43,8 +47,15 @@ export default class controller {
             });
         });
     }
+    handleAddOperation(value) {
+        this.operation.handleAddNumber(value);
+    }
     handleNumber(number) {
         this.currScreen.content = number.toString();
+        this.handleAddOperation(number.toString());
+    }
+    handleAddOperator(operator) {
+        this.handleAddOperation(operator);
     }
 }
 //# sourceMappingURL=controller.js.map

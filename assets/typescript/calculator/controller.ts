@@ -1,10 +1,12 @@
 import DateHour from "./dateHour.js";
+import Operation from "./operations.js";
 import Screen from "./screen.js";
 
 export default class controller {
 
   constructor(
-    private currScreen = new Screen()
+    private currScreen = new Screen(),
+    private operation = new Operation()
 ) {
 
     new DateHour();
@@ -14,7 +16,7 @@ export default class controller {
   buttonEvents(): void {
     document.querySelectorAll("#keyboard button").forEach((button) => {
       button.addEventListener("click", (event: Event) => {
-        const target = event.target as HTMLButtonElement;
+        const target = <HTMLButtonElement>event.target;
         console.log(target)
         switch (target.id) {
           case "one": 
@@ -33,6 +35,7 @@ export default class controller {
           case "subtraction":
           case "quotient":
           case "product":
+            this.handleAddOperator(<string>target.dataset.value)
             break; 
           case "percentage":
             break; 
@@ -48,7 +51,16 @@ export default class controller {
     });
   }
 
+  handleAddOperation(value: string) : void {
+    this.operation.handleAddNumber(value)
+}
+
   handleNumber(number: Number): void{
        this.currScreen.content = number.toString();
+       this.handleAddOperation(number.toString())
+  }
+  
+  handleAddOperator(operator: string): void {
+    this.handleAddOperation(operator)
   }
 }
