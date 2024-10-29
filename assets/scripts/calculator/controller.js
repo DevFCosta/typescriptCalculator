@@ -5,7 +5,7 @@ export default class controller {
     currScreen;
     operation;
     constructor(currScreen = new Screen(), operation = new Operation({
-        onCalculate: (result) => this.currScreen.content = result
+        onCalculate: (result) => (this.currScreen.content = result),
     })) {
         this.currScreen = currScreen;
         this.operation = operation;
@@ -57,10 +57,25 @@ export default class controller {
         this.operation.handleAddNumber(value);
     }
     handleNumber(number) {
+        if (isNaN(Number(this.operation.lastPosition))) {
+            this.handleAddOperation(number.toString());
+        }
+        else {
+            number = Number(this.operation.lastPosition.toString() + number.toString());
+            this.operation.lastPosition = number.toString();
+        }
         this.currScreen.content = number.toString();
-        this.handleAddOperation(number.toString());
     }
     handleAddOperator(operator) {
+        if (isNaN(Number(this.operation.lastPosition))) {
+            this.operation.lastPosition = operator;
+        }
+        else {
+            if (this.operation.length === 0) {
+                this.handleAddOperation('0');
+            }
+            this.handleAddOperation(operator);
+        }
         this.handleAddOperation(operator);
     }
 }

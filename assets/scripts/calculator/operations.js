@@ -30,6 +30,13 @@ export default class Operation {
         this.currOperation = [result];
         this.onCalculate(result);
     }
+    get lastPosition() {
+        return this.currOperation.length ? this.currOperation[this.currOperation.length - 1] : '0';
+    }
+    set lastPosition(value) {
+        const lastIndex = this.currOperation.length ? this.currOperation.length - 1 : '0';
+        this.currOperation[lastIndex] = value;
+    }
     get length() {
         return this.currOperation.length;
     }

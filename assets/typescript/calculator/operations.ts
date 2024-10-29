@@ -46,6 +46,16 @@ export default class Operation{
         this.onCalculate(result)
     }
 
+    get lastPosition(): string{
+        return this.currOperation.length ? this.currOperation[this.currOperation.length -1] : '0';
+    }
+
+    set lastPosition(value: string){
+        const lastIndex = this.currOperation.length ? this.currOperation.length - 1 : '0';
+        
+        this.currOperation[lastIndex] = value
+    }
+
     get length(): number{
         return this.currOperation.length
     }
